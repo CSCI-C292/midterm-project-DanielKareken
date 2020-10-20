@@ -21,20 +21,32 @@ public class PlayerController : PhysicsObject
 
     //public GameObject projectilePrefab;
     //public Transform shotSpawn;
+    public GameObject swordHitbox;
 
     // Use this for initialization
     void Awake()
     {
-        runtimeData.attacking = false;
+        runtimeData.animationLock = false;
+        GameEvents.health = 100;
+        swordHitbox.SetActive(false);
     }
 
     private void Update()
     {
         //basic attack
-        if (Input.GetMouseButtonDown(0))
+        if (Input.GetMouseButtonDown(0) && runtimeData.animationLock == false)
         {
-            runtimeData.attacking = true;
-            animator.SetBool("Attack", runtimeData.attacking);
+            runtimeData.animationLock = true;
+            animator.SetTrigger("Attack");
+            swordHitbox.SetActive(true);
+        }
+
+        //ability1 attack
+        if (Input.GetMouseButtonDown(1) && runtimeData.animationLock == false)
+        {
+            runtimeData.animationLock = true;
+            animator.SetTrigger("ability01");
+            swordHitbox.SetActive(true);
         }
 
         /*if (Input.GetKeyDown(KeyCode.S) && hasWeapon)
@@ -59,7 +71,7 @@ public class PlayerController : PhysicsObject
         }*/
 
         VelocityRefresh();
-        print(runtimeData.attacking);
+        //print(runtimeData.animationLock);
     }
 
     protected override void VelocityRefresh()
@@ -69,25 +81,6 @@ public class PlayerController : PhysicsObject
 
     public void OnTriggerEnter2D(Collider2D other)
     {
-        //touching weapon pickup allows player to shoot projectiles
-        if (other.gameObject.CompareTag("Weapon"))
-        {
-            hasWeapon = true;
-            ammo = 10f;
-            Destroy(other.gameObject);
-        }
-
-        //touching an enemy results in a game over
-        else if (other.gameObject.CompareTag("Enemy"))
-        {
-            gameObject.SetActive(false);
-            Invoke("RestartLevel", 2f);
-        }
-    }
-
-    //specifically for falling out of stage to restart level
-    public void OnTriggerExit2D(Collider2D other)
-    {
         if (other.gameObject.CompareTag("StageBounds"))
         {
             gameObject.SetActive(false);
@@ -95,21 +88,38 @@ public class PlayerController : PhysicsObject
         }
     }
 
+    public void OnCollisionEnter2D(Collision2D collision)
+    {
+        //if touching an enemy
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            GameEvents.health -= 10;
+            runtimeData.animationLock = true;
+            animator.SetBool("hurt", runtimeData.animationLock);
+        }
+    }
+
+    public void OnCollisionExit2D(Collision2D collision)
+    {
+        //if touching an enemy
+        if (collision.gameObject.CompareTag("Enemy"))
+        {
+            runtimeData.animationLock = false;
+        }
+    }
+
     protected override void ComputeVelocity()
     {
         Vector2 move = Vector2.zero;
 
-        if (!runtimeData.attacking)
-        {
-            move.x = Input.GetAxis("Horizontal");
-        }
+        move.x = Input.GetAxis("Horizontal");
 
-        if (Input.GetButtonDown("Jump") && grounded && !runtimeData.attacking)
+        if (Input.GetButtonDown("Jump") && grounded && !runtimeData.animationLock)
         {
             velocity.y = jumpTakeOffSpeed;
         }
 
-        else if (Input.GetButtonUp("Jump") && !runtimeData.attacking)
+        else if (Input.GetButtonUp("Jump") && !runtimeData.animationLock)
         {
             if (velocity.y > 0)
             {
