@@ -3415,9 +3415,11 @@ GameObject:
   - component: {fileID: 362677433}
   - component: {fileID: 362677432}
   - component: {fileID: 362677435}
+  - component: {fileID: 362677437}
+  - component: {fileID: 362677436}
   m_Layer: 0
   m_Name: Badpole
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3497,7 +3499,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 362677431}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.06, y: 0, z: 0}
+  m_LocalPosition: {x: 14.68, y: 2.05, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -3515,7 +3517,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d8dacef62a07ea14da751fb96816ae72, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 0
+  speed: 5
+  aggroRange: 1.5
+  enemyState: 0
+  player: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  rb: {fileID: 0}
+  anim: {fileID: 0}
+  chaseAfterAttackDistance: 1
+  chaseDistance: 5
+  patrolRadiusMin: 1
+  patrolRadiusMax: 5
+  patrolForThisTime: 3
+  waitBeforeAttack: 1
+--- !u!50 &362677436
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362677431}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0.5
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
+--- !u!58 &362677437
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 362677431}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: -0.14311445, y: -0.44909596}
+  serializedVersion: 2
+  m_Radius: 0.5272579
 --- !u!4 &372458895 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2075851784587991750, guid: 0a2457666fac2b7408683d97898d455b,
@@ -3664,6 +3715,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 107320332}
     m_Modifications:
+    - target: {fileID: 2770731772630920055, guid: b33f0422ddfa1b649bd00a9cc0105edd,
+        type: 3}
+      propertyPath: m_Name
+      value: Collectable
+      objectReference: {fileID: 0}
     - target: {fileID: -7528439156502068429, guid: b33f0422ddfa1b649bd00a9cc0105edd,
         type: 3}
       propertyPath: direction.y
@@ -3673,11 +3729,6 @@ PrefabInstance:
         type: 3}
       propertyPath: _speed
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2770731772630920055, guid: b33f0422ddfa1b649bd00a9cc0105edd,
-        type: 3}
-      propertyPath: m_Name
-      value: Collectable
       objectReference: {fileID: 0}
     - target: {fileID: 2770731772630920048, guid: b33f0422ddfa1b649bd00a9cc0105edd,
         type: 3}
@@ -3754,9 +3805,10 @@ GameObject:
   - component: {fileID: 963085535}
   - component: {fileID: 963085534}
   - component: {fileID: 963085537}
+  - component: {fileID: 963085538}
   m_Layer: 0
   m_Name: Deadlylion
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3855,6 +3907,34 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   speed: 0
+  aggroRange: 2.5
+  enemyState: 0
+  player: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  rb: {fileID: 0}
+  anim: {fileID: 0}
+  chaseAfterAttackDistance: 0
+  chaseDistance: 4
+  patrolRadiusMin: 0
+  patrolRadiusMax: 0
+  patrolForThisTime: 0
+  waitBeforeAttack: 0.7
+--- !u!70 &963085538
+CapsuleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 963085533}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.007873535, y: -0.8423455}
+  m_Size: {x: 0.9297695, y: 2.1578612}
+  m_Direction: 0
 --- !u!1 &1004058866
 GameObject:
   m_ObjectHideFlags: 0
@@ -3962,7 +4042,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1077657094}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.64, y: -0.4, z: 0}
+  m_LocalPosition: {x: 0.77, y: 12.67, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1900308935}
@@ -10639,9 +10719,11 @@ GameObject:
   - component: {fileID: 1861385894}
   - component: {fileID: 1861385893}
   - component: {fileID: 1861385896}
+  - component: {fileID: 1861385898}
+  - component: {fileID: 1861385897}
   m_Layer: 0
   m_Name: DuneBat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -10721,7 +10803,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1861385892}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 3.7, z: 0}
+  m_LocalPosition: {x: -6.15, y: 2.61, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
@@ -10739,6 +10821,56 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f3972890b88bd6145982fadfc7b92483, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
+  aggroRange: 3
+  enemyState: 0
+  player: {fileID: 0}
+  spriteRenderer: {fileID: 0}
+  rb: {fileID: 0}
+  anim: {fileID: 0}
+  chaseAfterAttackDistance: 1
+  chaseDistance: 10
+  patrolRadiusMin: 4
+  patrolRadiusMax: 20
+  patrolForThisTime: 3
+  waitBeforeAttack: 2
+--- !u!58 &1861385897
+CircleCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861385892}
+  m_Enabled: 1
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0.000000834465, y: 0.1180855}
+  serializedVersion: 2
+  m_Radius: 1.0789305
+--- !u!50 &1861385898
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1861385892}
+  m_BodyType: 0
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0.5
+  m_AngularDrag: 0.05
+  m_GravityScale: 0
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 4
 --- !u!1 &1900308932
 GameObject:
   m_ObjectHideFlags: 0

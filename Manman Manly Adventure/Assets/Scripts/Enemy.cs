@@ -2,55 +2,60 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum EnemyState
+{
+    PATROL,
+    CHASE,
+    ATTACK
+}
+
 public class Enemy : MonoBehaviour
 {
-    GameObject player;
-    private SpriteRenderer spriteRenderer;
-    Rigidbody2D rb; //refernce to self rigidbody
     public float speed;
+    public float aggroRange;
+    public EnemyState enemyState;
+
+    public GameObject player;
+    public SpriteRenderer spriteRenderer;
+    public Rigidbody2D rb; //refernce to self rigidbody
+    public Animator anim;
+
+    public float chaseAfterAttackDistance;
+    public float chaseDistance;
+
+    public float patrolRadiusMin, patrolRadiusMax;
+    public float patrolForThisTime;
+
+    public float waitBeforeAttack;
+    private float attackTimer;
 
     // Start is called before the first frame update
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
-    }
-
-    // Update is called once per frame
-    void Start()
-    {
+        anim = GetComponent<Animator>();
         player = GameObject.FindGameObjectWithTag("Player");
         rb = GetComponent<Rigidbody2D>();
+        attackTimer = waitBeforeAttack;
     }
 
-    // Update is called once per frame
-    void FixedUpdate()
+    public void Attack()
     {
-        //Follow player if player in range
-        Vector2 dirToPlayer = player.transform.position - transform.position; //get direction between this enemy and player
+        rb.velocity = Vector2.zero;
+        attackTimer += Time.deltaTime;
 
-        if (dirToPlayer.x <= 10f && dirToPlayer.x >= -10f)
+        if (attackTimer > waitBeforeAttack)
         {
-            if (dirToPlayer.x < 0)
-            {
-                spriteRenderer.flipX = true;
-            }
-            else
-            {
-                spriteRenderer.flipX = false;
-            }
-
-            dirToPlayer = dirToPlayer.normalized;
-            rb.AddForce(dirToPlayer * speed); //moves enemy
+            anim.SetTrigger("attack");
+            attackTimer = 0f;
         }
 
-        //if player not close enough, standard patrol pathing
-        patrol();
+        if (Vector2.Distance(transform.position, player.transform.position) > aggroRange + chaseAfterAttackDistance)
+        {
+            enemyState = EnemyState.CHASE;
+        }
     }
-
-    void patrol()
-    {
-
-    }
+    
 
     public void OnTriggerEnter2D(Collider2D collision)
     {

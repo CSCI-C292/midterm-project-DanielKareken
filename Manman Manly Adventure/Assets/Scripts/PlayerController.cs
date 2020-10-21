@@ -86,6 +86,8 @@ public class PlayerController : PhysicsObject
             gameObject.SetActive(false);
             Invoke("RestartLevel", 2f);
         }
+
+        
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -101,11 +103,7 @@ public class PlayerController : PhysicsObject
 
     public void OnCollisionExit2D(Collision2D collision)
     {
-        //if touching an enemy
-        if (collision.gameObject.CompareTag("Enemy"))
-        {
-            runtimeData.animationLock = false;
-        }
+
     }
 
     protected override void ComputeVelocity()
