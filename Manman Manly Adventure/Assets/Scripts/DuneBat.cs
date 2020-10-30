@@ -39,22 +39,36 @@ public class DuneBat : Enemy
     public void Patrol()
     {
         patrolTimer += Time.deltaTime;
-        print(patrolTimer);
+        //print(patrolTimer);
+
         if (patrolTimer > patrolForThisTime)
         {
+            rb.velocity = Vector2.zero;
+
             //Set random destination
             float randRadius = Random.Range(patrolRadiusMin, patrolRadiusMax);
             randDir = Random.insideUnitSphere * randRadius;
-            randDir += (Vector2)transform.position;
+            randDir.x += transform.position.x;
+            randDir.y += transform.position.y;
 
             patrolTimer = 0f;
         }
 
         randDir = randDir.normalized;
-        print("Test: " + randDir); 
+
+        if (randDir.x < 0)
+        {
+            gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+
+        else
+        {
+            gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
         rb.AddForce(randDir * speed);
 
-        if (Vector3.Distance(transform.position, player.transform.position) <= chaseDistance)
+        if (Vector2.Distance(transform.position, player.transform.position) <= chaseDistance)
         {
             enemyState = EnemyState.CHASE;
         }
@@ -66,12 +80,12 @@ public class DuneBat : Enemy
 
         if (dirToPlayer.x < 0)
         {
-            spriteRenderer.flipX = true;
+            gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
         else
         {
-            spriteRenderer.flipX = false;
+            gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         }  
 
         dirToPlayer = dirToPlayer.normalized;
@@ -80,7 +94,7 @@ public class DuneBat : Enemy
         if (Vector2.Distance(transform.position, player.transform.position) <= aggroRange)
         {
             enemyState = EnemyState.ATTACK;
-
+            rb.velocity = Vector2.zero;
             //play audio?
 
             if (chaseDistance != currentChaseDistance)

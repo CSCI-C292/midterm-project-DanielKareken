@@ -8,8 +8,8 @@ public class Collectable : MonoBehaviour
     public GameObject visuals;
     public GameObject particles;
 
-    CircleCollider2D collectableCollider2D;
-    AudioSource collectSound;
+    public CircleCollider2D collectableCollider2D;
+    public AudioSource collectSound;
 
     public bool isSecret;
 
@@ -18,12 +18,6 @@ public class Collectable : MonoBehaviour
     {
         collectableCollider2D = GetComponent<CircleCollider2D>();
         collectSound = GetComponent<AudioSource>();
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
     }
 
     void OnTriggerEnter2D(Collider2D theCollider)
@@ -36,14 +30,18 @@ public class Collectable : MonoBehaviour
             }
 
             GameEvents.score += 10;
-
-            collectableCollider2D.enabled = false;
-            visuals.SetActive(false);
-            particles.SetActive(true);
-
-            collectSound.Play();
-            Destroy(gameObject, collectSound.clip.length);
-            gameObject.SetActive(false);
+            destroyThis();
         }
+    }
+
+    //destroys game object in a way that allows it to play a sound
+    public void destroyThis()
+    {
+        collectableCollider2D.enabled = false;
+        visuals.SetActive(false);
+        particles.SetActive(true);
+
+        collectSound.Play();
+        Destroy(gameObject, collectSound.clip.length);
     }
 }

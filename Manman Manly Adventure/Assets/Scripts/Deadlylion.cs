@@ -4,12 +4,9 @@ using UnityEngine;
 
 public class Deadlylion : Enemy
 {
-    float attackTimer;
-
     private void Start()
     {
         enemyState = EnemyState.PATROL;
-        attackTimer = waitBeforeAttack;
     }
 
     // Update is called once per frame
@@ -43,15 +40,14 @@ public class Deadlylion : Enemy
     public void Chase()
     {
         Vector2 dirToPlayer = player.transform.position - transform.position; //get direction between this enemy and player
-        attackTimer = waitBeforeAttack - 0.1f;
 
         if (dirToPlayer.x < 0)
         {
-            spriteRenderer.flipX = false;
+            gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         }
         else
         {
-            spriteRenderer.flipX = true;
+            gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
         if (Vector2.Distance(transform.position, player.transform.position) <= aggroRange)
@@ -63,22 +59,6 @@ public class Deadlylion : Enemy
         else if (Vector2.Distance(transform.position, player.transform.position) > chaseDistance)
         {
             enemyState = EnemyState.PATROL;
-        }
-    }
-
-    new public void Attack()
-    {
-        attackTimer += Time.deltaTime;
-
-        if (attackTimer > waitBeforeAttack)
-        {
-            anim.SetTrigger("attack");
-            attackTimer = 0f;
-        }
-
-        if (Vector2.Distance(transform.position, player.transform.position) > aggroRange + chaseAfterAttackDistance)
-        {
-            enemyState = EnemyState.CHASE;
         }
     }
 }

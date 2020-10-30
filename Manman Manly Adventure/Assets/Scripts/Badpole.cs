@@ -6,6 +6,7 @@ public class Badpole : Enemy
 {
     float currentChaseDistance;
     float patrolTimer;
+    Vector2 randDir;
 
     private void Start()
     {
@@ -41,12 +42,17 @@ public class Badpole : Enemy
 
         if (patrolTimer > patrolForThisTime)
         {
-            SetNewRandomDestination();
+            //Set random destination
+            float randRadius = Random.Range(patrolRadiusMin, patrolRadiusMax);
+            randDir = Random.insideUnitSphere * randRadius;
+            randDir.x += transform.position.x;
+            randDir.y += transform.position.y;
+
             patrolTimer = 0f;
         }
 
         //check if enemy moving
-        /*if (moving)
+        if (rb.velocity.x != 0f)
         {
             anim.SetBool("moving", true);
         }
@@ -54,20 +60,26 @@ public class Badpole : Enemy
         else
         {
             anim.SetBool("moving", false);
-        }*/
+        }
 
-        if (Vector3.Distance(transform.position, player.transform.position) <= chaseDistance)
+        randDir = randDir.normalized;
+
+        if (randDir.x < 0)
+        {
+            gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
+        }
+
+        else
+        {
+            gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
+        }
+
+        rb.AddForce(randDir * speed);
+
+        if (Vector2.Distance(transform.position, player.transform.position) <= chaseDistance)
         {
             enemyState = EnemyState.CHASE;
         }
-    }
-
-    //helper for Patrol()
-    void SetNewRandomDestination()
-    {
-        float randRadius = Random.Range(patrolRadiusMin, patrolRadiusMax);
-        Vector2 randDir = Random.insideUnitCircle * randRadius;
-        randDir += (Vector2)transform.position;
     }
 
     public void Chase()
@@ -77,12 +89,12 @@ public class Badpole : Enemy
 
         if (dirToPlayer.x < 0)
         {
-            spriteRenderer.flipX = true;
+            gameObject.transform.eulerAngles = new Vector3(0, 180, 0);
         }
 
         else
         {
-            spriteRenderer.flipX = false;
+            gameObject.transform.eulerAngles = new Vector3(0, 0, 0);
         }
 
         dirToPlayer = dirToPlayer.normalized;
@@ -91,7 +103,7 @@ public class Badpole : Enemy
         if (Vector2.Distance(transform.position, player.transform.position) <= aggroRange)
         {
             enemyState = EnemyState.ATTACK;
-
+            rb.velocity = Vector2.zero;
             //play audio?
 
             if (chaseDistance != currentChaseDistance)

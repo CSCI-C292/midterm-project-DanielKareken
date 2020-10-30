@@ -1,7 +1,49 @@
 fileFormatVersion: 2
 guid: 72dbc9e069e15284eafd18711ae722e7
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 4631070007860707457
+    second: attack - vanilla_0
+  - first:
+      213: -7440643885300456691
+    second: attack - vanilla_1
+  - first:
+      213: 8573100534416115251
+    second: attack - vanilla_2
+  - first:
+      213: -2862296897685026091
+    second: attack - vanilla_3
+  - first:
+      213: 6527811927043139778
+    second: attack - vanilla_4
+  - first:
+      213: 6533444510201013370
+    second: attack - vanilla_5
+  - first:
+      213: -1357579638899430388
+    second: attack - vanilla_6
+  - first:
+      213: -7373883553278039841
+    second: attack - vanilla_7
+  - first:
+      213: 5547526398803660609
+    second: attack - vanilla_8
+  - first:
+      213: -2939132488965393712
+    second: attack - vanilla_9
+  - first:
+      213: -8763036960816291240
+    second: attack - vanilla_10
+  - first:
+      213: 3958653421095950527
+    second: attack - vanilla_11
+  - first:
+      213: 6304044348605506177
+    second: attack - vanilla_12
+  - first:
+      213: 6735477961808558640
+    second: attack - vanilla_13
   externalObjects: {}
   serializedVersion: 10
   mipmaps:
@@ -31,7 +73,7 @@ TextureImporter:
   maxTextureSize: 2048
   textureSettings:
     serializedVersion: 2
-    filterMode: -1
+    filterMode: 0
     aniso: -1
     mipBias: -100
     wrapU: 1
@@ -40,12 +82,12 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 1
+  spriteMode: 2
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
-  spritePixelsToUnits: 100
+  spritePixelsToUnits: 16
   spriteBorder: {x: 0, y: 0, z: 0, w: 0}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
@@ -69,9 +111,314 @@ TextureImporter:
     allowsAlphaSplitting: 0
     overridden: 0
     androidETC2FallbackOverride: 0
+  - serializedVersion: 2
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    androidETC2FallbackOverride: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: attack - vanilla_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 212
+        width: 50
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a02093a4084d9a43bb6120263abf01c
+      internalID: 4631070007860707457
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_1
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 205
+        width: 128
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90349fe1aa5bce745a295a03aadc66c9
+      internalID: -7440643885300456691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_2
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 211
+        width: 60
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc8f3e7e4b5e7df4c8fe347bd0dbbeeb
+      internalID: 8573100534416115251
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_3
+      rect:
+        serializedVersion: 2
+        x: 6
+        y: 131
+        width: 52
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20f136ad9a86b414ba46974699da46e5
+      internalID: -2862296897685026091
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_4
+      rect:
+        serializedVersion: 2
+        x: 64
+        y: 134
+        width: 128
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b55e4badcf2d854c94851d47a60412a
+      internalID: 6527811927043139778
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_5
+      rect:
+        serializedVersion: 2
+        x: 194
+        y: 134
+        width: 60
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 987f3031ea63d6842831c67a24df3434
+      internalID: 6533444510201013370
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_6
+      rect:
+        serializedVersion: 2
+        x: 5
+        y: 77
+        width: 26
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8ce7921c7f0393b47be98d5017eb80d4
+      internalID: -1357579638899430388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_7
+      rect:
+        serializedVersion: 2
+        x: 68
+        y: 77
+        width: 36
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1c6e6dafc18c39141bc65edd212fc496
+      internalID: -7373883553278039841
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_8
+      rect:
+        serializedVersion: 2
+        x: 134
+        y: 77
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 81d88e0cdda7d1e4c900cce1e712ac72
+      internalID: 5547526398803660609
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_9
+      rect:
+        serializedVersion: 2
+        x: 198
+        y: 77
+        width: 27
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 97e510f1e968e1a4f8875eb28b99933b
+      internalID: -2939132488965393712
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_10
+      rect:
+        serializedVersion: 2
+        x: 33
+        y: 13
+        width: 26
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 44261a2e39ba63345bd0937cceb00e45
+      internalID: -8763036960816291240
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_11
+      rect:
+        serializedVersion: 2
+        x: 88
+        y: 13
+        width: 36
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c574137d45e88c340b336bdb324cd7c2
+      internalID: 3958653421095950527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_12
+      rect:
+        serializedVersion: 2
+        x: 154
+        y: 13
+        width: 32
+        height: 40
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 04a0cbcf1d449d9418f8f3e33a1fd024
+      internalID: 6304044348605506177
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: attack - vanilla_13
+      rect:
+        serializedVersion: 2
+        x: 223
+        y: 13
+        width: 27
+        height: 41
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c41dc653ccd861a4abbfb6314c579b56
+      internalID: 6735477961808558640
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

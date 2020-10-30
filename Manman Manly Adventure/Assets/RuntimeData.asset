@@ -14,3 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   attacking: 0
   animationLock: 0
+  facingRight: 0
+  speedUp: 1
+  strengthUp: 0
+  healthUp: 0
+  noActive: 0
