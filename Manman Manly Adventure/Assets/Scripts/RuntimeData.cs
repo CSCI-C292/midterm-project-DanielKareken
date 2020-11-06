@@ -10,10 +10,15 @@ public class RuntimeData : ScriptableObject
     public bool attacking;
     public bool animationLock;
     public bool facingRight;
+    public bool hurt;
+    public bool fireballOnCD;
 
-    //PowerUps
-    public bool speedUp;
+    //Power up
     public bool strengthUp;
-    public bool healthUp;
-    public bool noActive;
+    public bool powerUpActive;
+
+    //Win cond
+    public bool pacifist;
+    public string winCond;
+    public bool gameOver;
 }

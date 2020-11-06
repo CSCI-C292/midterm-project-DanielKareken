@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,7 +7,6 @@ public class PowerUpManager : MonoBehaviour
 {
     public RuntimeData runtimeData;
 
-    public GameObject healthIcon;
     public GameObject speedIcon;
     public GameObject strengthIcon;
 
@@ -14,34 +14,34 @@ public class PowerUpManager : MonoBehaviour
     {
         speedIcon.SetActive(false);
         strengthIcon.SetActive(false);
-        healthIcon.SetActive(false);
+
+        GameEvents.PowerUp += OnPowerUp;
+        GameEvents.PowerDown += OnPowerDown;
     }
 
-    private void Update()
+    void OnPowerUp(object sender, PowerUpEventArgs args)
     {
-        if (runtimeData.speedUp)
+        if (args.powerUp == "Strength")
+        {
+            strengthIcon.SetActive(true);
+            speedIcon.SetActive(false);
+        }
+        else if (args.powerUp == "Speed")
         {
             speedIcon.SetActive(true);
             strengthIcon.SetActive(false);
-            healthIcon.SetActive(false);
         }
-        else if (runtimeData.healthUp)
-        {
-            speedIcon.SetActive(false);
-            strengthIcon.SetActive(false);
-            healthIcon.SetActive(true);
-        }
-        else if (runtimeData.strengthUp)
-        {
-            speedIcon.SetActive(false);
-            strengthIcon.SetActive(true);
-            healthIcon.SetActive(false);
-        }
-        else if (runtimeData.noActive)
-        {
-            speedIcon.SetActive(false);
-            strengthIcon.SetActive(false);
-            healthIcon.SetActive(false);
-        }
+    }
+
+    void OnPowerDown(object sender, EventArgs args)
+    {
+        speedIcon.SetActive(false);
+        strengthIcon.SetActive(false);
+    }
+
+    private void OnDestroy()
+    {
+        GameEvents.PowerUp -= OnPowerUp;
+        GameEvents.PowerDown -= OnPowerDown;
     }
 }

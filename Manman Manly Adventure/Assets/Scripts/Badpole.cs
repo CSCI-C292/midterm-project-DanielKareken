@@ -17,7 +17,7 @@ public class Badpole : Enemy
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (enemyState == EnemyState.PATROL)
         {
@@ -98,7 +98,8 @@ public class Badpole : Enemy
         }
 
         dirToPlayer = dirToPlayer.normalized;
-        rb.AddForce(dirToPlayer * speed * 2); //moves enemy
+        //dirToPlayer.y = 0f;
+        rb.AddForce(dirToPlayer * speed); //moves enemy
 
         if (Vector2.Distance(transform.position, player.transform.position) <= aggroRange)
         {

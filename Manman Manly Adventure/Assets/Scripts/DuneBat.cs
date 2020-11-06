@@ -17,7 +17,7 @@ public class DuneBat : Enemy
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
 
         if (enemyState == EnemyState.PATROL)

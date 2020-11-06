@@ -1,29 +1,46 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour
 {
-    public RuntimeData runtimeData;
+    [SerializeField] RuntimeData runtimeData;
+    Slider slider;
+
+    float health;
+
+    private void Start()
+    {
+        slider = GetComponent<Slider>();
+    }
 
     void Update()
     {
-        GetComponent<TextMeshProUGUI>().text = "Health: " + GameEvents.health;
-
         if (GameEvents.health <= 0)
         {
-            GameEvents.InvokeGameOver("died");
+            runtimeData.winCond = "died";
+            runtimeData.gameOver = true;
         }
 
-        //healthUp mechanic
-        if (runtimeData.healthUp && GameEvents.health < 76f)
-        {
-            GameEvents.health += 25f;
-        }
-        else if (runtimeData.healthUp && GameEvents.health != 100)
+        health = GameEvents.health;
+        setHealth(health);
+    }
+
+    //HealthUp power up
+    public void OnPowerUp(object sender, PowerUpEventArgs args)
+    {
+        if (args.powerUp == "Health")
         {
             GameEvents.health = 100;
         }
+        
+    }
+
+    public void setHealth(float health)
+    {
+        slider.value = health;
     }
 }

@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,6 +8,9 @@ public class PImpDevil : Enemy
     float currentChaseDistance;
     float patrolTimer;
     Vector2 randDir;
+    float health;
+
+    private float devilAttackTimer;
 
     private void Start()
     {
@@ -14,10 +18,13 @@ public class PImpDevil : Enemy
         patrolTimer = patrolForThisTime;
 
         enemyState = EnemyState.PATROL;
+        devilAttackTimer = waitBeforeAttack;
+
+        health = 100;
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         if (enemyState == EnemyState.PATROL)
         {
@@ -32,6 +39,21 @@ public class PImpDevil : Enemy
         if (enemyState == EnemyState.ATTACK)
         {
             Attack();
+        }        
+    }
+
+    public new void OnTriggerEnter2D(Collider2D collision)
+    {
+        //if successfully hit by player attack
+        if (collision.gameObject.CompareTag("PlayerAttackHitbox") )
+        {
+            health -= 20;
+        }
+
+        if (health <= 0)
+        {
+            anim.SetTrigger("hurt");
+            GameEvents.score += 1000;
         }
     }
 
@@ -61,6 +83,7 @@ public class PImpDevil : Enemy
         }
 
         dirToPlayer = dirToPlayer.normalized;
+        dirToPlayer.y = 0;
         rb.AddForce(dirToPlayer * speed * 2); //moves enemy
 
         if (Vector2.Distance(transform.position, player.transform.position) <= aggroRange)
@@ -86,6 +109,38 @@ public class PImpDevil : Enemy
             {
                 chaseDistance = currentChaseDistance;
             }
+        }
+    }
+
+    new public void Attack()
+    {
+        devilAttackTimer += Time.deltaTime;
+        anim.SetBool("moving", false);
+
+        if (devilAttackTimer > waitBeforeAttack)
+        {
+            float chooseAttack = UnityEngine.Random.Range(0f, 3f);
+
+            if (chooseAttack < 1f)
+            {
+                anim.SetTrigger("ClawAttack");           
+            }
+            else if (chooseAttack < 2f)
+            {
+                anim.SetTrigger("PitchforkAttack");
+            }
+            else
+            {
+                anim.SetTrigger("SwordAttack");
+            }
+
+            devilAttackTimer = 0f; 
+        }
+
+        if (Vector2.Distance(transform.position, player.transform.position) > aggroRange + chaseAfterAttackDistance)
+        {
+            enemyState = EnemyState.CHASE;
+            devilAttackTimer = waitBeforeAttack - 0.1f;
         }
     }
 }

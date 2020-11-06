@@ -14,6 +14,8 @@ public class PlayerAnimation : MonoBehaviour
     bool facingLeft;
 
     [SerializeField] RuntimeData runtimeData;
+    [SerializeField] AudioSource swordSound;
+    [SerializeField] AudioSource fireballSound;
 
     void Awake()
     {
@@ -25,12 +27,12 @@ public class PlayerAnimation : MonoBehaviour
     void Update()
     {
         //For abilities
-        if (GameEvents.abilityTimer > 0)
+        if (GameEvents.abilityCooldown > 0)
         {
             Vector3 moveFireball = fireball.transform.up;
             fireball.transform.position += moveFireball * fireballSpeed * Time.deltaTime;
         }
-        else if (GameEvents.abilityTimer <= 0 && fireballActive)
+        else if (GameEvents.abilityCooldown <= 0 && fireballActive)
         {
             fireballActive = false;
             fireball.SetActive(false);
@@ -40,6 +42,11 @@ public class PlayerAnimation : MonoBehaviour
     void unlockPlayer()
     {
         runtimeData.animationLock = false;
+    }
+
+    void notHurt()
+    {
+        runtimeData.hurt = false;
     }
 
     void attackHitboxEnable()
@@ -70,6 +77,16 @@ public class PlayerAnimation : MonoBehaviour
         fireballStartPos = player.transform.position;
         Vector2 displaceFromPlayer = fireball.transform.up;
         fireball.transform.position = fireballStartPos + displaceFromPlayer * 2;
-        GameEvents.abilityTimer = .7f;
+        GameEvents.abilityCooldown = .7f;
+    }
+
+    void playSwordSound()
+    {
+        swordSound.Play();
+    }
+
+    void playFireballSound()
+    {
+        fireballSound.Play();
     }
 }

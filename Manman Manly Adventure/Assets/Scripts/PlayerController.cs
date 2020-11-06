@@ -2,29 +2,38 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class PlayerController : PhysicsObject
 {
-
     public float maxSpeed = 7;
     public float jumpTakeOffSpeed = 7;
     public float shotSpeed = 10;
     public float ammo = 0f;
 
-    public bool hasWeapon = false;
+    public bool died = false;
 
-    [SerializeField] Animator animator;
+    public Animator animator;
     [SerializeField] RuntimeData runtimeData;
+
+    Vector3 baseScale;
+    float baseSpeed;
 
     // Use this for initialization
     void Awake()
     {
         runtimeData.animationLock = false;
+        runtimeData.hurt = false;
         runtimeData.facingRight = false;
         GameEvents.health = 100;
+        baseScale = transform.localScale;
+        baseSpeed = maxSpeed;
+        animator = GetComponentInChildren<Animator>();
+    }
 
-        GameEvents.GameOver += OnGameOver;
+    private void Start()
+    {
+        GameEvents.PowerUp += OnPowerUp;
+        GameEvents.PowerDown += OnPowerDown;
     }
 
     private void Update()
@@ -40,43 +49,11 @@ public class PlayerController : PhysicsObject
         if (Input.GetMouseButtonDown(1) && runtimeData.animationLock == false)
         {
             runtimeData.animationLock = true;
+            runtimeData.fireballOnCD = true;
             animator.SetTrigger("ability01");
         }
 
-        //close the game
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
-        /*if (Input.GetKeyDown(KeyCode.S) && hasWeapon)
-        {
-            GameObject projectile = Instantiate(projectilePrefab, shotSpawn.transform.position, projectilePrefab.transform.rotation);
-            Rigidbody2D projectileRB = projectile.GetComponent<Rigidbody2D>();
-            float directedSpeed = shotSpeed;
-
-            //check which direction player is facing to shoot forward
-            if (spriteRenderer.flipX == true)
-            {
-                directedSpeed = -directedSpeed;
-            }
-
-            projectileRB.velocity = transform.right * directedSpeed;
-            ammo--;
-
-            if (ammo < 1)
-            {
-                hasWeapon = false;
-            }
-        }*/
-
-        if (runtimeData.strengthUp == true)
-        {
-            //activate animation
-            //print("Strength boosted");
-        }
-
         VelocityRefresh();
-        //print(runtimeData.animationLock);
     }
 
     protected override void VelocityRefresh()
@@ -85,18 +62,33 @@ public class PlayerController : PhysicsObject
     }
 
     public void OnTriggerEnter2D(Collider2D other)
-    {
-        if (other.gameObject.CompareTag("StageBounds"))
-        {
-            GameEvents.InvokeGameOver("died");
-        }
-        else if (other.gameObject.CompareTag("EnemyAttackHitbox"))
+    {  
+        if (other.gameObject.CompareTag("EnemyAttackHitbox") && !runtimeData.hurt)
         {
             GameEvents.health -= 20;
             runtimeData.animationLock = true;
+            runtimeData.hurt = true;
             animator.SetBool("hurt", runtimeData.animationLock);
         }
-        
+
+        if (other.gameObject.CompareTag("BossAttackHitbox") && !runtimeData.hurt)
+        {
+            GameEvents.health -= 40;
+            runtimeData.animationLock = true;
+            runtimeData.hurt = true;
+            animator.SetBool("hurt", runtimeData.animationLock);
+        }
+    }
+
+    public void OnTriggerExit2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("StageBounds") && !died)
+        {
+            print("calling (arg died)");
+            runtimeData.winCond = "died";
+            runtimeData.gameOver = true;
+            died = true;
+        }
     }
 
     public void OnCollisionEnter2D(Collision2D collision)
@@ -106,6 +98,7 @@ public class PlayerController : PhysicsObject
         {
             GameEvents.health -= 10;
             runtimeData.animationLock = true;
+            runtimeData.hurt = true;
             animator.SetBool("hurt", runtimeData.animationLock);
         }
     }
@@ -154,24 +147,34 @@ public class PlayerController : PhysicsObject
         animator.SetBool("grounded", grounded);
         animator.SetFloat("velocityX", Mathf.Abs(velocity.x) / maxSpeed);
 
-        if (runtimeData.speedUp == true)
+        targetVelocity = move * maxSpeed;
+    }
+
+    private void OnPowerUp(object sender, PowerUpEventArgs args)
+    {
+        if (args.powerUp == "Strength")
         {
-            targetVelocity = move * maxSpeed * 1.5f;
+            print(animator.Equals(null));
+            animator.SetTrigger("strengthUp");
+            runtimeData.animationLock = true;
+            gameObject.transform.localScale *= 1.5f;
         }
-        else {
-            targetVelocity = move * maxSpeed;
+
+        else if (args.powerUp == "Speed")
+        {
+            maxSpeed *= 1.5f;
         }
     }
 
-    void OnGameOver(object sender, EventArgs args)
+    void OnPowerDown(object sender, EventArgs args)
     {
-        gameObject.SetActive(false);
-        Invoke("RestartLevel", 2f);
+        gameObject.transform.localScale = baseScale;
+        maxSpeed = baseSpeed;
     }
 
-    //reloads level after player dies, timer expires, or score limit reached
-    void RestartLevel()
+    private void OnDestroy()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        GameEvents.PowerUp -= OnPowerUp;
+        GameEvents.PowerDown -= OnPowerDown;
     }
 }

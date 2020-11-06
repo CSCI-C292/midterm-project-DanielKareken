@@ -10,11 +10,6 @@ public class PowerUp : Collectable
     // Start is called before the first frame update
     void Start()
     {
-        runtimeData.strengthUp = false;
-        runtimeData.speedUp = false;
-        runtimeData.healthUp = false;
-        runtimeData.noActive = true;
-
         collectableCollider2D = GetComponent<CircleCollider2D>();
         collectSound = GetComponent<AudioSource>();
     }
@@ -22,35 +17,15 @@ public class PowerUp : Collectable
     // Update is called once per frame
     void Update()
     {
-        visuals.transform.Rotate(0, 8, 0);
+        visuals.transform.Rotate(0, 4, 0);
     }
 
     void OnTriggerEnter2D(Collider2D theCollider)
     {
         if (theCollider.CompareTag("Player"))
         {
-            //Health PowerUp
-            if (type == "Health")
-            {
-                runtimeData.healthUp = true;
-                runtimeData.noActive = false;
-                GameEvents.powerUpTimer = 3;
-            }
-            //Strength PowerUp
-            else if (type == "Strength")
-            {
-                runtimeData.strengthUp = true;
-                runtimeData.noActive = false;
-                GameEvents.powerUpTimer = 10f;
-            }
-            //Speed PowerUp
-            else if (type == "Speed")
-            {
-                runtimeData.speedUp = true;
-                runtimeData.noActive = false;
-                GameEvents.powerUpTimer = 15f;
-            }
-
+            GameEvents.InvokePowerUp(type);
+            runtimeData.powerUpActive = true;
             destroyThis();
         }
     }

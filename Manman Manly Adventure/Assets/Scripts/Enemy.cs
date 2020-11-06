@@ -11,6 +11,8 @@ public enum EnemyState
 
 public class Enemy : MonoBehaviour
 {
+    [SerializeField] RuntimeData runtimeData;
+
     public float speed;
     public float aggroRange;
     public EnemyState enemyState;
@@ -30,6 +32,8 @@ public class Enemy : MonoBehaviour
     private float attackTimer;
     public GameObject attackHitbox;
 
+    public AudioSource attackSound;
+
     void Awake()
     {
         spriteRenderer = GetComponent<SpriteRenderer>();
@@ -38,6 +42,7 @@ public class Enemy : MonoBehaviour
         rb = GetComponent<Rigidbody2D>();
         attackTimer = waitBeforeAttack;
         attackHitbox.SetActive(false);
+        attackSound = GetComponent<AudioSource>();
     }
 
     public void Attack()
@@ -64,6 +69,7 @@ public class Enemy : MonoBehaviour
         if (collision.gameObject.CompareTag("PlayerAttackHitbox"))
         {
             GameEvents.score += 100;
+            runtimeData.pacifist = false;
             anim.SetTrigger("hurt");
         }
     }
@@ -81,5 +87,10 @@ public class Enemy : MonoBehaviour
     public void DisableAttackHitbox()
     {
         attackHitbox.SetActive(false);
+    }
+
+    public void playAttackSound()
+    {
+        attackSound.Play();
     }
 }

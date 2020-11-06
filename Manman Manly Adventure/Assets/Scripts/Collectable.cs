@@ -12,6 +12,7 @@ public class Collectable : MonoBehaviour
     public AudioSource collectSound;
 
     public bool isSecret;
+    bool collected = false;
 
     // Start is called before the first frame update
     void Start()
@@ -22,15 +23,17 @@ public class Collectable : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D theCollider)
     {
-        if (theCollider.CompareTag("Player"))
+        if (theCollider.CompareTag("Player") && !collected)
         {
+            destroyThis();
+            collected = true;
+
             if (isSecret)
             {
                 GameEvents.secretsCollected += 1;
             }
 
             GameEvents.score += 10;
-            destroyThis();
         }
     }
 

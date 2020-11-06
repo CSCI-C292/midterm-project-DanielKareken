@@ -8,24 +8,35 @@ public class GameOverEventArgs : EventArgs
     public string condition;
 }
 
+public class PowerUpEventArgs : EventArgs
+{
+    public string powerUp;
+}
+
 public static class GameEvents
 {
-    public static event EventHandler GameOver;
+    public static event EventHandler<PowerUpEventArgs> PowerUp;
+    public static event EventHandler PowerDown;
 
     public static float health;
 
-    public static int secretsCollected = 0;
-    public static int score = 0;
+    public static int secretsCollected;
+    public static int score;
 
-    public static float powerUpTimer = 0f;
+    public static float powerUpTimer;
 
-    public static float gameTimer = 360f;
-    public static bool gameOver = false;
+    public static float gameTimer;
+    public static bool gameOver;
 
-    public static float abilityTimer = 0f;
+    public static float abilityCooldown;
 
-    public static void InvokeGameOver(string cond)
+    public static void InvokePowerUp(string power)
     {
-        GameOver(null, new GameOverEventArgs { condition = cond });
+        PowerUp(null, new PowerUpEventArgs { powerUp = power });
+    }
+
+    public static void InvokePowerDown()
+    {
+        PowerDown(null, EventArgs.Empty);
     }
 }

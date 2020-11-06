@@ -6,27 +6,30 @@ public class GameTimers : MonoBehaviour
 {
     public RuntimeData runtimeData;
 
+    bool gameTimerOn;
+
     // Start is called before the first frame update
     void Start()
     {
-
+        GameEvents.powerUpTimer = 0;
+        runtimeData.powerUpActive = false;
+        gameTimerOn = true;
     }
 
     // Update is called once per frame
     void Update()
     {
         //PowerUp Timer
-        if (GameEvents.powerUpTimer > 0)
+        if (GameEvents.powerUpTimer > 0 && runtimeData.powerUpActive)
         {
             GameEvents.powerUpTimer -= Time.deltaTime * 1f;
             print(GameEvents.powerUpTimer);
         }
-        else if (GameEvents.powerUpTimer <= 0)
+
+        else if (GameEvents.powerUpTimer <= 0 && runtimeData.powerUpActive)
         {
-            runtimeData.speedUp = false;
-            runtimeData.strengthUp = false;
-            runtimeData.healthUp = false;
-            runtimeData.noActive = true;
+            runtimeData.powerUpActive = false;
+            GameEvents.InvokePowerDown();
         }
 
         //Game Timer
@@ -34,16 +37,19 @@ public class GameTimers : MonoBehaviour
         {
             GameEvents.gameTimer -= Time.deltaTime * 1f;
         }
-        else if (GameEvents.gameTimer <= 0)
+        else if (GameEvents.gameTimer <= 0 && gameTimerOn)
         {
             //end game
-            GameEvents.InvokeGameOver("times up");
+            gameTimerOn = false;
+            print("calling (arg times up)");
+            runtimeData.winCond = "times up";
+            runtimeData.gameOver = true;
         }
 
         //Ability timer
-        if (GameEvents.abilityTimer > 0)
+        if (GameEvents.abilityCooldown > 0)
         {
-            GameEvents.abilityTimer -= Time.deltaTime * 1f;
+            GameEvents.abilityCooldown -= Time.deltaTime * 1f;
         }
     }
 }
