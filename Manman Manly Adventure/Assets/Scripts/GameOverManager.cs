@@ -34,10 +34,28 @@ public class GameOverManager : MonoBehaviour
             gameOver = true;
         }
 
-        if(GameEvents.secretsCollected == 3 && !gameOver)
+        if (GameEvents.secretsCollected == 3 && !gameOver)
         {
             runtimeData.gameOver = true;
             runtimeData.winCond = "secret";
+        }
+
+        if (GameEvents.coinsCollected >= 6 && !gameOver)
+        {
+            runtimeData.gameOver = true;
+            runtimeData.winCond = "Other";
+        }
+
+        if (GameEvents.bossBeaten == true && !gameOver)
+        {
+            runtimeData.gameOver = true;
+            runtimeData.winCond = "Other";
+        }
+
+        if (GameEvents.score >= 500 && runtimeData.pacifist)
+        {
+            runtimeData.gameOver = true;
+            runtimeData.winCond = "Pacifist";
         }
     }
 

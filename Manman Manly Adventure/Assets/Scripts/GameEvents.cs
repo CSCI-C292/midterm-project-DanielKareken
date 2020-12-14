@@ -21,6 +21,7 @@ public static class GameEvents
     public static float health;
 
     public static int secretsCollected;
+    public static int coinsCollected;
     public static int score;
 
     public static float powerUpTimer;
@@ -29,6 +30,7 @@ public static class GameEvents
     public static bool gameOver;
 
     public static float abilityCooldown;
+    public static bool bossBeaten;
 
     public static void InvokePowerUp(string power)
     {

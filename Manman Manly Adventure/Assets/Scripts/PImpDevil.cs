@@ -9,6 +9,7 @@ public class PImpDevil : Enemy
     float patrolTimer;
     Vector2 randDir;
     float health;
+    bool dead;
 
     private float devilAttackTimer;
 
@@ -21,6 +22,7 @@ public class PImpDevil : Enemy
         devilAttackTimer = waitBeforeAttack;
 
         health = 100;
+        dead = false;
     }
 
     // Update is called once per frame
@@ -50,10 +52,12 @@ public class PImpDevil : Enemy
             health -= 20;
         }
 
-        if (health <= 0)
+        if (health <= 0 && !dead)
         {
             anim.SetTrigger("hurt");
             GameEvents.score += 1000;
+            GameEvents.bossBeaten = true;
+            dead = true;
         }
     }
 

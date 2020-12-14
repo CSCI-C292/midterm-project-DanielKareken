@@ -5,6 +5,7 @@ using UnityEngine;
 public class GameInitializer : MonoBehaviour
 {
     [SerializeField] AudioSource themesong;
+    [SerializeField] GameObject player;
     // Start is called before the first frame update
     void Awake()
     {
@@ -13,7 +14,7 @@ public class GameInitializer : MonoBehaviour
 
         GameEvents.powerUpTimer = 0f;
 
-        GameEvents.gameTimer = 300f;
+        GameEvents.gameTimer = 180f;
         GameEvents.gameOver = false;
 
         GameEvents.abilityCooldown = 0f;
@@ -22,5 +23,6 @@ public class GameInitializer : MonoBehaviour
     void Start()
     {
         themesong.Play();
+        player.SetActive(true);
     }
 }

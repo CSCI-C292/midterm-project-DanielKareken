@@ -43,19 +43,35 @@ public class GameOverMenu : MonoBehaviour
                 rank = "Wimp";
             }
 
-            else if (runtimeData.pacifist && GameEvents.score >= 70)
+            else if (runtimeData.pacifist && GameEvents.score >= 40)
             {
-                rank = "Pacifist";
+                rank = "Beta Pacifist";
                 textColor = Color.green;
             }
+        }
 
-            else if (!runtimeData.pacifist && GameEvents.score >= 500)
+        else if (cond == "Other")
+        {
+            if (GameEvents.score >= 500 && !GameEvents.bossBeaten)
             {
                 rank = "Manly man";
                 textColor = Color.green;
             }
-            else if (!runtimeData.pacifist && GameEvents.score >= 1000)
+
+            else if (runtimeData.pacifist && GameEvents.score >= 60)
             {
+                rank = "True Pacifist";
+                textColor = Color.green;
+            }
+
+            else if (!runtimeData.pacifist && GameEvents.score >= 60)
+            {
+                rank = "Based Scrooge";
+                textColor = Color.green;
+            }
+
+            else if (!runtimeData.pacifist && GameEvents.bossBeaten)
+           {
                 rank = "Manliest Man";
                 textColor = Color.green;
             }

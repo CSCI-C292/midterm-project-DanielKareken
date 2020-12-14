@@ -25,7 +25,6 @@ public class Collectable : MonoBehaviour
     {
         if (theCollider.CompareTag("Player") && !collected)
         {
-            destroyThis();
             collected = true;
 
             if (isSecret)
@@ -34,6 +33,8 @@ public class Collectable : MonoBehaviour
             }
 
             GameEvents.score += 10;
+            GameEvents.coinsCollected++;
+            destroyThis();
         }
     }
 
